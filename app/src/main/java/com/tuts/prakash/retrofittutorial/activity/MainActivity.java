@@ -220,21 +220,19 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    String line = lineBuilder.toString();
+                    final String line = lineBuilder.toString();
 
                     for (Game g : games) {
                         String name = g.getName();
 
                         for(int i = 0; i < lines.size(); i++) {
 
-                            List<String> name_parts = Arrays.asList(name.split("[\n ]+"));
-                            for(int j = 0; j < name_parts.size(); j++) {
 
-                                if (name.contains(lines.get(i)) || line.contains(name_parts.get(j))) {
+                                if (name.toUpperCase().contains(lines.get(i).toUpperCase())) {
                                     found = true;
                                     break;
                                 }
-                            }
+
                         }
 
                         if (found) {
@@ -255,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
                             public void run() {
 
                                 Toast.makeText(getApplicationContext(),
-                                        "No games found :/", Toast.LENGTH_LONG).show();
+                                        "No games found :/" , Toast.LENGTH_LONG).show();
 
                             }
                         });

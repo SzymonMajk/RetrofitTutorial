@@ -1,6 +1,7 @@
 package com.tuts.prakash.retrofittutorial.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 import com.tuts.prakash.retrofittutorial.R;
+import com.tuts.prakash.retrofittutorial.activity.DetailActivity;
 import com.tuts.prakash.retrofittutorial.model.Game;
 
 import java.io.File;
@@ -59,7 +61,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     }
 
     @Override
-    public void onBindViewHolder(CustomViewHolder holder, int position) {
+    public void onBindViewHolder(final CustomViewHolder holder, final int position) {
         holder.txtTitle.setText(dataList.get(position).getName());
 
         Log.e("card", "ok");
@@ -75,6 +77,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
                     .placeholder((R.drawable.ic_launcher_background))
                     .error(R.drawable.ic_launcher_background)
                     .into(holder.coverImage);
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Game g = dataList.get(position);
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("Game0Our", g.getId());
+                    intent.putExtra("Game0Foreign", g.getBoardGameGeekId());
+                    intent.putExtra("Game0Url", g.getImageUrl());
+                    intent.putExtra("Game0UrlThumb", g.getImageThumbnailUrl());
+                    intent.putExtra("Game0Name", g.getName());
+                    context.startActivity(intent);
+                }
+            });
 
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,5 +69,12 @@ public class DetailActivity extends AppCompatActivity {
                 .placeholder((R.drawable.ic_launcher_background))
                 .error(R.drawable.ic_launcher_background)
                 .into(detailedImage);
+    }
+
+    public void reserve(View view){
+        Intent intent = new Intent(this, ReservationActivity.class);
+        String name = ((TextView)findViewById(R.id.detailedTitle)).getText().toString();
+        intent.putExtra("NAME",name);
+        startActivity(intent);
     }
 }
