@@ -1,7 +1,9 @@
 package com.tuts.prakash.retrofittutorial.adapter;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +13,24 @@ import android.widget.TextView;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 import com.tuts.prakash.retrofittutorial.R;
-import com.tuts.prakash.retrofittutorial.model.RetroPhoto;
+import com.tuts.prakash.retrofittutorial.model.Game;
 
+import java.io.File;
+import java.io.OutputStreamWriter;
+import java.nio.file.Files;
 import java.util.List;
 
 /**
  * Created by praka on 12/24/2017.
+ * Edited by Diksu on 23/03/2019.
  */
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomViewHolder> {
 
-    private List<RetroPhoto> dataList;
+    private List<Game> dataList;
     private Context context;
 
-    public CustomAdapter(Context context,List<RetroPhoto> dataList){
+    public CustomAdapter(Context context,List<Game> dataList){
         this.context = context;
         this.dataList = dataList;
     }
@@ -54,14 +60,21 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        holder.txtTitle.setText(dataList.get(position).getTitle());
+        holder.txtTitle.setText(dataList.get(position).getName());
 
-        Picasso.Builder builder = new Picasso.Builder(context);
-        builder.downloader(new OkHttp3Downloader(context));
-        builder.build().load(dataList.get(position).getThumbnailUrl())
-                .placeholder((R.drawable.ic_launcher_background))
-                .error(R.drawable.ic_launcher_background)
-                .into(holder.coverImage);
+        Log.e("card", "ok");
+/*
+        File image = new File(context.getFilesDir().getPath() + "/id.jpg");
+
+        if (image.exists()) {
+            holder.coverImage.setImageBitmap(BitmapFactory.decodeFile(image.getPath()));
+        } else {*/
+            Picasso.Builder builder = new Picasso.Builder(context);
+            builder.downloader(new OkHttp3Downloader(context));
+            builder.build().load(dataList.get(position).getImageThumbnailUrl())
+                    .placeholder((R.drawable.ic_launcher_background))
+                    .error(R.drawable.ic_launcher_background)
+                    .into(holder.coverImage);
 
     }
 
@@ -69,4 +82,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.CustomView
     public int getItemCount() {
         return dataList.size();
     }
+
+
 }
